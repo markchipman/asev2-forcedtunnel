@@ -1,0 +1,576 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "namePrefix": {
+            "type": "string",
+            "metadata": {
+                "description": "Unique name prefix to use for beginning of VNET, Subnet, UDR and NSG resource names"
+            },
+            "defaultValue": "ase01"
+        },
+        "vnetAddressPrefix": {
+            "type": "string",
+            "metadata": {
+                "description": "Overall IP address CIDR block for VNET to be created"
+            },
+            "defaultValue": "10.0.0.0/16"
+        },
+        "subnetAddressPrefix": {
+            "type": "string",
+            "metadata": {
+                "description": "IP address CIDR block for subnet on which ASE will be deployed"
+            },
+            "defaultValue": "10.0.1.0/25"
+        },
+        "disableBgpRoutePropagation": {
+            "type": "string",
+            "allowedValues": [
+                "true",
+                "false"
+            ],
+            "metadata": {
+                "description": "Normally leave at False to allow BGP routes from on-premises to be injected into VNET routing table"
+            },
+            "defaultValue": "false"
+        }
+    },
+    "variables": {
+        "vnetName": "[concat(parameters('namePrefix'),'-vnet')]",
+        "subnetName": "[concat(parameters('namePrefix'),'Subnet')]",
+        "udrName": "[concat(parameters('namePrefix'),'-routetable')]",
+        "nsgName": "[concat(parameters('namePrefix'),'-nsg')]"
+    },
+    "resources": [
+        {
+            "name": "[variables('udrName')]",
+            "type": "Microsoft.Network/routeTables",
+            "apiVersion": "2017-10-01",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [],
+            "properties": {
+                "disableBgpRoutePropagation": "[parameters('disableBgpRoutePropagation')]",
+                "routes": [
+                    {
+                        "name": "aseMgmt01",
+                        "properties": {
+                            "addressPrefix": "70.37.57.58/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt02",
+                        "properties": {
+                            "addressPrefix": "157.55.208.185/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt03",
+                        "properties": {
+                            "addressPrefix": "52.174.22.21/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt04",
+                        "properties": {
+                            "addressPrefix": "13.94.149.179/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt05",
+                        "properties": {
+                            "addressPrefix": "13.94.143.126/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt06",
+                        "properties": {
+                            "addressPrefix": "13.94.141.115/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt07",
+                        "properties": {
+                            "addressPrefix": "52.178.195.197/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt08",
+                        "properties": {
+                            "addressPrefix": "52.178.190.65/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt09",
+                        "properties": {
+                            "addressPrefix": "52.178.184.189/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt10",
+                        "properties": {
+                            "addressPrefix": "52.178.177.147/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt11",
+                        "properties": {
+                            "addressPrefix": "13.75.127.117/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt12",
+                        "properties": {
+                            "addressPrefix": "40.83.125.161/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt13",
+                        "properties": {
+                            "addressPrefix": "40.83.121.56/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt14",
+                        "properties": {
+                            "addressPrefix": "40.83.120.64/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt15",
+                        "properties": {
+                            "addressPrefix": "52.187.56.50/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt16",
+                        "properties": {
+                            "addressPrefix": "52.187.63.37/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt17",
+                        "properties": {
+                            "addressPrefix": "52.187.59.251/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt18",
+                        "properties": {
+                            "addressPrefix": "52.187.63.19/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt19",
+                        "properties": {
+                            "addressPrefix": "52.165.158.140/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt20",
+                        "properties": {
+                            "addressPrefix": "52.165.152.214/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt21",
+                        "properties": {
+                            "addressPrefix": "52.165.154.193/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt22",
+                        "properties": {
+                            "addressPrefix": "52.165.153.122/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt23",
+                        "properties": {
+                            "addressPrefix": "104.44.129.255/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt24",
+                        "properties": {
+                            "addressPrefix": "104.44.134.255/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt25",
+                        "properties": {
+                            "addressPrefix": "104.44.129.243/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt26",
+                        "properties": {
+                            "addressPrefix": "104.44.129.141/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt27",
+                        "properties": {
+                            "addressPrefix": "104.43.165.73/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt28",
+                        "properties": {
+                            "addressPrefix": "104.46.108.135/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt29",
+                        "properties": {
+                            "addressPrefix": "23.102.188.65/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt30",
+                        "properties": {
+                            "addressPrefix": "191.236.154.88/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt31",
+                        "properties": {
+                            "addressPrefix": "23.101.234.41/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt32",
+                        "properties": {
+                            "addressPrefix": "104.210.90.65/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt33",
+                        "properties": {
+                            "addressPrefix": "104.45.227.37/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt34",
+                        "properties": {
+                            "addressPrefix": "191.236.60.72/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt35",
+                        "properties": {
+                            "addressPrefix": "191.233.94.45/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt36",
+                        "properties": {
+                            "addressPrefix": "191.237.222.191/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt37",
+                        "properties": {
+                            "addressPrefix": "13.78.148.75/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt38",
+                        "properties": {
+                            "addressPrefix": "13.66.225.188/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt39",
+                        "properties": {
+                            "addressPrefix": "23.99.115.5/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt40",
+                        "properties": {
+                            "addressPrefix": "104.215.158.33/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt41",
+                        "properties": {
+                            "addressPrefix": "104.41.185.116/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt42",
+                        "properties": {
+                            "addressPrefix": "191.239.104.48/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt43",
+                        "properties": {
+                            "addressPrefix": "40.85.230.101/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt44",
+                        "properties": {
+                            "addressPrefix": "40.86.229.100/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt45",
+                        "properties": {
+                            "addressPrefix": "51.141.8.34/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt46",
+                        "properties": {
+                            "addressPrefix": "51.140.185.75/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt47",
+                        "properties": {
+                            "addressPrefix": "52.231.200.177/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt48",
+                        "properties": {
+                            "addressPrefix": "52.231.32.117/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt49",
+                        "properties": {
+                            "addressPrefix": "104.41.46.178/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt50",
+                        "properties": {
+                            "addressPrefix": "104.211.98.24/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt51",
+                        "properties": {
+                            "addressPrefix": "104.211.225.66/32",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "aseMgmt52",
+                        "properties": {
+                            "addressPrefix": "104.211.160.229/32",
+                            "nextHopType": "Internet"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[variables('nsgName')]",
+            "apiVersion": "2017-10-01",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [],
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "ase-mgmt-in",
+                        "properties": {
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 100,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [
+                                "454",
+                                "455"
+                            ],
+                            "sourceAddressPrefixes": [
+                                "70.37.57.58",
+                                "157.55.208.185",
+                                "52.174.22.21",
+                                "13.94.149.179",
+                                "13.94.143.126",
+                                "13.94.141.115",
+                                "52.178.195.197",
+                                "52.178.190.65",
+                                "52.178.184.149",
+                                "52.178.177.147",
+                                "13.75.127.117",
+                                "40.83.125.161",
+                                "40.83.121.56",
+                                "40.83.120.64",
+                                "52.187.56.50",
+                                "52.187.63.37",
+                                "52.187.59.251",
+                                "52.187.63.19",
+                                "52.165.158.140",
+                                "52.165.152.214",
+                                "52.165.154.193",
+                                "52.165.153.122",
+                                "104.44.129.255",
+                                "104.44.134.255",
+                                "104.44.129.243",
+                                "104.44.129.141",
+                                "104.43.165.73",
+                                "104.46.108.135",
+                                "23.102.188.65",
+                                "191.236.154.88",
+                                "23.101.234.41",
+                                "104.210.90.65",
+                                "104.45.227.37",
+                                "191.236.60.72",
+                                "191.233.94.45",
+                                "191.237.222.191",
+                                "13.78.148.75",
+                                "13.66.225.188",
+                                "23.99.115.5",
+                                "104.215.158.33",
+                                "104.41.185.116",
+                                "191.239.104.48",
+                                "40.85.230.101",
+                                "40.86.229.100",
+                                "51.141.8.34",
+                                "51.140.185.75",
+                                "52.231.200.177",
+                                "52.231.32.117",
+                                "104.41.46.178",
+                                "104.211.98.24",
+                                "104.211.225.66",
+                                "104.211.160.229"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "azure-storage-outbound",
+                        "properties": {
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "Storage",
+                            "access": "Allow",
+                            "priority": 900,
+                            "direction": "Outbound",
+                            "destinationPortRanges": [
+                                "80",
+                                "443",
+                                "445"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "azure-sql-outbound",
+                        "properties": {
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "Sql",
+                            "access": "Allow",
+                            "priority": 910,
+                            "direction": "Outbound",
+                            "destinationPortRanges": [
+                                "1433",
+                                "11000-11999",
+                                "14000-14999"
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2017-08-01",
+            "name": "[variables('vnetName')]",
+            "type": "Microsoft.Network/virtualNetworks",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[variables('udrName')]",
+                "[variables('nsgName')]"
+            ],
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('vnetAddressPrefix')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[variables('subnetName')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('subnetAddressPrefix')]",
+                            "routeTable": {
+                                "id": "[resourceId('Microsoft.Network/routeTables', variables('udrName'))]"
+                            },
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
+                            },
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.Sql"
+                                },
+                                {
+                                    "service": "Microsoft.Storage"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}
