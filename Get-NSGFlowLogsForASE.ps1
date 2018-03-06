@@ -85,7 +85,7 @@ Function Get-NSGFlowLogEntries ([string]$storageAccount, [string]$resourceGroup,
 
     Do 
     {
-        $blobs = (Get-AzureStorageContainer -Name $logStorageContainer -Context $logStorageContext | Get-AzureStorageBlob)
+        $blobs = (Get-AzureStorageContainer -Name $logStorageContainer -Context $logStorageContext | Get-AzureStorageBlob -ContinuationToken $continuationToken)
         $continuationToken = $blobs[-1].ContinuationToken
         $blobList += $blobs.Name
     } 
