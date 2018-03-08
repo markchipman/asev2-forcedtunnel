@@ -15,12 +15,12 @@
 
 # Variables - update to match your deployment
 
-$subscriptionId = "00000000-0000-0000-0000-000000000000"
-$aseName = "ase"
-$aseResourceGroup = "ase-rg"
-$logStorageAccount = "logsa"
-$logResourceGroupName = "logsa-rg"
-$logRule = "UserRule_azure-storage-outbound"
+$subscriptionId = "35481b74-e090-40a8-888b-42bc552d8369"
+$aseName = "ase05"
+$aseResourceGroup = "ase05-env1-rg"
+$logStorageAccount = "kemsa02"
+$logResourceGroupName = "arm02kem-rg"
+$logRules = @("UserRule_azure-storage-outbound", "UserRule_azure-sql-outbound")
 $whitelistFilename = "${env:USERPROFILE}\Documents\${aseName}-whitelistips.json"
 
 # Convert from Unix EPOC time to .NET DateTime format
